@@ -34,8 +34,6 @@ cfp.app.hostname=http://localhost
 
 cfp.google.login=
 cfp.google.password=
-cfp.google.spreadsheetName=CallForPaperSII
-cfp.google.worksheetName=dev
 
 cfp.email.emailsender=cfp@breizhcamp.org
 cfp.email.send=true

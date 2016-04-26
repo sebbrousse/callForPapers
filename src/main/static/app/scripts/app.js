@@ -472,26 +472,6 @@ angular.module('CallForPaper', [
             clientId: Config.githubClientId
         });
 
-        $authProvider.oauth2({
-            name: 'spreadsheet',
-            url: '/auth/spreadsheet',
-            authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
-            redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
-            scope: ['https://www.googleapis.com/auth/drive.file', 'https://spreadsheets.google.com/feeds'],
-            clientId: Config.googleClientId,
-            scopeDelimiter: ' ',
-            accessType: 'offline',
-            approvalPrompt: 'force',
-            requiredUrlParams: ['scope', 'access_type', 'approval_prompt'],
-            optionalUrlParams: ['display'],
-            display: 'popup',
-            type: '2.0',
-            popupOptions: {
-                width: 580,
-                height: 400
-            }
-        });
-
     }])
     .config(function(NotificationProvider) {
         NotificationProvider.setOptions({
