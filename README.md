@@ -1,6 +1,7 @@
 
 # Call For Papers
 
+
 <img src="https://raw.githubusercontent.com/SII-Nantes/callForPaper/master/readme/screenshot.png" alt="alt text" width="100%">
 
 ## Features
@@ -149,3 +150,11 @@ requests to the backend are forwarded to the AppEngine development server (`http
  - http://127.0.0.1:8080/ : User login page (create new talks)
 
  - http://127.0.0.1:8080/#/admin : Admin panel (rating, comment...)
+
+
+### Contribution and project infrastructure
+
+Development take places on branch `master`. We have a CI job setup to validate pull-requests, please avoid direct push to master.
+Contributors, please sign-off your commits (`git commit --signoff`)
+Production environment is configured to deploy from `production` branch. Another CI job do build and deploy from this branch automatically.
+So please test from `master` branch before pushing to `production`.
