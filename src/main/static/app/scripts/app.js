@@ -240,6 +240,9 @@ angular.module('CallForPaper', [
                 abstract: true,
                 resolve: {
                     authenticated: AuthServiceProvider.$get().authenticated,
+                    currentUser: ['AuthService', function(AuthService) {
+                        return AuthService.getCurrentUser();
+                    }],
                     user: function(RestrictedUser) {
                         return RestrictedUser.get().$promise;
                     },

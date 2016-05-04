@@ -407,4 +407,10 @@
 
     </changeSet>
 
+    <changeSet id="20" author="ndeloof">
+        <addColumn tableName="users">
+            <column name="language" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

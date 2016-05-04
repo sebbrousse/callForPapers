@@ -25,4 +25,7 @@
     <li ui-sref-active="active">
         <a ui-sref="app.profil">{{'header.profil' | translate}}</a>
     </li>
+    <li ui-sref-active="active" ng-if="topMenu.isAdmin">
+        <a ui-sref="admin.sessions">{{'header.admin' | translate}}</a>
+    </li>
 </ul>

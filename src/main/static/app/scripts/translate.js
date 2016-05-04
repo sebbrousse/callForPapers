@@ -47,7 +47,8 @@ angular.module('CallForPaper')
                 'dashboard': 'Dashboard',
                 'profil': 'Profil',
                 'openUntil': 'Ouvert jusqu\'au ',
-                'decision': 'Délibération le '
+                'decision': 'Délibération le ',
+                'admin': 'Admin'
             },
             'languageModal': {
                 'choose': 'Choisissez une langue',
@@ -363,7 +364,8 @@ angular.module('CallForPaper')
                 'dashboard': 'Dashboard',
                 'profil': 'Profil',
                 'openUntil': 'Open until the ',
-                'decision': 'Decision the '
+                'decision': 'Decision the ',
+                'admin': 'Admin'
             },
             'languageModal': {
                 'choose': 'Choose a langage',

@@ -31,11 +31,17 @@ import javax.persistence.Table;
 @Table(name = "events")
 public class Event {
 
+    private static ThreadLocal<String> current = new ThreadLocal<String>();
+
     public static String current() {
-        return "default"; // TODO
+        String s = current.get();
+        return s != null ? s : "default";
     }
 
     @Id
     private String id;
 
+    public static void setCurrent(String tenant) {
+        current.set(tenant);
+    }
 }

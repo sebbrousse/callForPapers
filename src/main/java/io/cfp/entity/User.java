@@ -70,6 +70,7 @@ public class User {
     private String verifyToken;
 
 
+
     /* ****  USER PROFILE  **** */
     private String lastname;
     private String firstname;
@@ -79,6 +80,8 @@ public class User {
     private String twitter;
     private String googleplus;
     private String github;
+    private String language = "fr";
+
     /**
      * other url (blog, linkedin...)
      */
@@ -167,6 +170,11 @@ public class User {
         return phone;
     }
 
+    @Type(type = "string")
+    public String getLanguage() {
+        return language;
+    }
+
     @Type(type = "text")
     public String getBio() {
         return bio;
@@ -236,6 +244,10 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setLanguage(String language) {
+        this.language= language;
     }
 
     public void setBio(String bio) {
