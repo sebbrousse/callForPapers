@@ -22,6 +22,7 @@ package io.cfp.config.email;
 
 import java.util.Locale;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -29,8 +30,8 @@ import org.springframework.util.Assert;
 
 import io.cfp.config.email.EmailingSettings.EmailType;
 
-@RunWith(BlockJUnit4ClassRunner.class)
 public class EmailingSettingsTest {
+
   private final static String TALK = "Talk12345";
 
   private final static String SPEAKER = "Speaker12345";

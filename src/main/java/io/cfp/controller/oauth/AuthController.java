@@ -80,6 +80,9 @@ public class AuthController {
     @Autowired
     private AuthSettings authSettings;
 
+    @Autowired
+    private ReCaptchaChecker reCaptchaChecker;
+
     /**
      * Log user in
      *
@@ -129,7 +132,7 @@ public class AuthController {
     public Token signup(HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest, @RequestBody @Valid SignupUser signupUser)
             throws Exception {
 
-        ReCaptchaCheckerReponse rep = ReCaptchaChecker.checkReCaptcha(authSettings.getCaptchaSecret(), signupUser.getCaptcha());
+        ReCaptchaCheckerReponse rep = reCaptchaChecker.checkReCaptcha(authSettings.getCaptchaSecret(), signupUser.getCaptcha());
         if (!rep.getSuccess()) {
             throw new BadRequestException("Bad captcha");
         }

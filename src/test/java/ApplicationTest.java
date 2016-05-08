@@ -18,50 +18,63 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+import io.cfp.controller.ApplicationController;
+import io.cfp.dto.ApplicationSettings;
+import io.cfp.service.admin.config.ApplicationConfigService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.jayway.restassured.module.mockmvc.RestAssuredMockMvc;
 
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Mockito.when;
 
 
 /**
  * Created by tmaugin on 08/04/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:META-INF/spring/applicationContext*.xml","classpath:META-INF/spring/dispatcherServlet*.xml"})
-@WebAppConfiguration
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {
 
-    @Autowired
-    WebApplicationContext webApplicationContext;
+    @Mock
+    private ApplicationConfigService applicationConfigService;
 
-    @Before public void
-    setUp() {
-        RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
+    private ApplicationController applicationController;
+
+    @Before
+    public void setUp() {
+        applicationController = new ApplicationController();
+        ReflectionTestUtils.setField(applicationController, "applicationConfigService", applicationConfigService);
+        RestAssuredMockMvc.standaloneSetup(applicationController);
     }
 
     @Test
-    @Ignore
-    public void test1_getApplicetion() {
+    public void test1_getApplication() {
+
+        ApplicationSettings applicationSettings = new ApplicationSettings();
+        when(applicationConfigService.getAppConfig()).thenReturn(applicationSettings);
+
         given()
                 .contentType("application/json")
                 .when()
                 .get("/api/application")
                 .then()
                 .statusCode(200)
-                .body("size()", equalTo(5));
+                .body("size()", equalTo(7));
     }
+
+
 }

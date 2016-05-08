@@ -11,6 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages = {"io.cfp.entity"})
 @EnableJpaRepositories(basePackages = {"io.cfp.repository"})
 @EnableTransactionManagement
-public class RepositoriesTest {
+public class RepositoriesConfig {
 
 }

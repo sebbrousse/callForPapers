@@ -24,6 +24,7 @@ import io.cfp.domain.token.Token;
 import io.cfp.service.auth.AuthUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -36,7 +37,6 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Created by tmaugin on 20/05/2015.
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AuthTest {
 
     String secretToken = "secretTestsecretTestsecretTestsecretTestsecretTestsecretTestsecretTestsecretTest";

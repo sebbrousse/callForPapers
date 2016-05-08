@@ -26,22 +26,32 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.notNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
+import io.cfp.dto.ApplicationSettings;
+import io.cfp.repository.CfpConfigRepo;
 import io.cfp.repository.UserRepo;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -60,11 +70,10 @@ import io.cfp.service.admin.config.ApplicationConfigService;
 import io.cfp.service.admin.user.AdminUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ApplicationJUnit.class)
-@WebAppConfiguration
+@ContextConfiguration(classes = EmailingServiceTest.Config.class)
 public class EmailingServiceTest {
 
-    public static final String JOHN_DOE_EMAIL = "john.doe@gmail.com";
+    private static final String JOHN_DOE_EMAIL = "john.doe@gmail.com";
 
     @Spy
     private EmailingService emailingService;
@@ -126,6 +135,9 @@ public class EmailingServiceTest {
         // Don't forget to set the test port!
         javaMailSender.setPort(3025);
         javaMailSender.setHost("localhost");
+
+        when(applicationConfigService.getAppConfig()).thenReturn(new ApplicationSettings());
+
     }
 
     @Test
@@ -392,5 +404,54 @@ public class EmailingServiceTest {
     @After
     public void cleanup() {
         testSmtp.stop();
+    }
+
+    @Configuration
+    static class Config {
+
+        @Bean
+        public static PropertySourcesPlaceholderConfigurer properties() {
+            final PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+            final Properties properties = new Properties();
+            properties.setProperty("cfp.app.hostname", "");
+            properties.setProperty("cfp.database.loaded", "");
+            properties.setProperty("cfp.email.emailsender", "");
+            properties.setProperty("cfp.email.send", "false");
+            propertySourcesPlaceholderConfigurer.setProperties(properties);
+            return propertySourcesPlaceholderConfigurer;
+        }
+
+        @Bean // field injection of EmailingService
+        public ApplicationConfigService applicationConfigService() {
+            return mock(ApplicationConfigService.class);
+        }
+
+        @Bean // field injection of ApplicationConfigService
+        public CfpConfigRepo cfpConfigRepo() {
+            return mock(CfpConfigRepo.class);
+        }
+
+        @Bean // field injection of EmailingService
+        public GlobalSettings globalSettings() {
+            return mock(GlobalSettings.class);
+        }
+
+        @Bean // field injection of EmailingService
+        public EmailingSettings emailingSettings() {
+            return new EmailingSettings();
+        }
+
+        @Bean // field injection of EmailingService
+        public JavaMailSenderImpl javaMailSender() {
+            return mock(JavaMailSenderImpl.class);
+        }
+
+        @Bean
+        public UserRepo userRepo() {
+            return mock(UserRepo.class);
+        }
+
+
+
     }
 }

@@ -25,9 +25,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.isNull;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -37,16 +36,34 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import io.cfp.config.auth.AuthSettings;
+import io.cfp.config.email.EmailingSettings;
+import io.cfp.config.global.GlobalSettings;
 import io.cfp.controller.ScheduleController;
+import io.cfp.controller.config.security.SecurityConfig;
+import io.cfp.controller.oauth.AuthController;
+import io.cfp.repository.CfpConfigRepo;
+import io.cfp.service.admin.config.ApplicationConfigService;
+import io.cfp.service.recaptcha.ReCaptchaChecker;
+import io.cfp.service.user.UserService;
+import ma.glasnost.orika.MapperFacade;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
@@ -67,13 +84,8 @@ import io.cfp.service.email.EmailingService;
  * Created by Nicolas on 30/01/2016.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(MockitoJUnitRunner.class)
 public class ScheduleControllerTest {
-
-    public static final String JOHN_DOE_EMAIL = "john.doe@gmail.com";
 
     @Mock
     private TalkUserService talkUserService;
@@ -83,15 +95,9 @@ public class ScheduleControllerTest {
 
     private ScheduleController scheduleController;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
-
         scheduleController = new ScheduleController(talkUserService, emailingService);
-        // this.restMockMvc = MockMvcBuilders.standaloneSetup(scheduleController).build();
         RestAssuredMockMvc.standaloneSetup(scheduleController);
     }
 
@@ -319,4 +325,5 @@ public class ScheduleControllerTest {
 
         verify(emailingService).sendSelectionned(talkUser1, Locale.FRENCH);
     }
+
 }

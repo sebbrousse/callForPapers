@@ -27,6 +27,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.mock.web.MockFilterChain;
@@ -41,7 +42,6 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by tmaugin on 22/05/2015.
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AuthFilterTest {
 
     private MockFilterChain chain;

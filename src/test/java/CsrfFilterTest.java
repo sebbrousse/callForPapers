@@ -24,6 +24,7 @@
 import io.cfp.config.filter.CsrfFilter;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.mock.web.MockFilterChain;
@@ -36,7 +37,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CsrfFilterTest {
 
     private MockFilterChain chain;

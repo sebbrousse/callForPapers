@@ -21,6 +21,7 @@
 package io.cfp.service.recaptcha;
 
 import io.cfp.domain.recaptcha.ReCaptchaCheckerReponse;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -29,10 +30,11 @@ import org.springframework.web.client.RestTemplate;
  * Created by tmaugin on 22/05/2015.
  * SII
  */
-abstract public class ReCaptchaChecker {
-    public static final String RECAPTCHA_VERIF_URL = "https://www.google.com/recaptcha/api/siteverify";
+@Component
+public class ReCaptchaChecker {
+    private static final String RECAPTCHA_VERIF_URL = "https://www.google.com/recaptcha/api/siteverify";
 
-    public static ReCaptchaCheckerReponse checkReCaptcha(String secret, String response) {
+    public ReCaptchaCheckerReponse checkReCaptcha(String secret, String response) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("secret", secret);
         map.add("response", response);
