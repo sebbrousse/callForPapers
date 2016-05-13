@@ -26,13 +26,10 @@ import io.cfp.entity.Role;
 import io.cfp.service.RateAdminService;
 import io.cfp.service.admin.user.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -70,6 +67,7 @@ public class AdminRateController {
      */
     @RequestMapping(method=RequestMethod.POST)
     @Secured(Role.ADMIN)
+    @ResponseStatus(HttpStatus.CREATED)
     public RateAdmin postRate(@Valid @RequestBody RateAdmin rate) throws NotFoundException {
         return rateService.add(rate, adminUserServiceCustom.getCurrentUser(), rate.getTalkId());
     }

@@ -30,21 +30,14 @@ import io.cfp.service.email.EmailingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -163,6 +156,7 @@ public class ScheduleController {
      */
     @RequestMapping(value = "/notification", method = RequestMethod.POST)
     @Secured(Role.ADMIN)
+    @ResponseStatus(HttpStatus.CREATED)
     public Map<String, List<TalkUser>> notifyScheduling() {
         Map<String, List<TalkUser>> result = new HashMap<>();
 

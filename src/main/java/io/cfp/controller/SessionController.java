@@ -30,13 +30,10 @@ import io.cfp.repository.UserRepo;
 import io.cfp.service.TalkUserService;
 import io.cfp.service.email.EmailingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -61,6 +58,7 @@ public class SessionController extends RestrictedController {
      */
     @RequestMapping(value="/proposals", method=RequestMethod.POST)
     @Secured(Role.AUTHENTICATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public TalkUser submitTalk(HttpServletRequest req, @Valid @RequestBody TalkUser talkUser) throws Exception, CospeakerNotFoundException  {
         User user = retrieveUser(req);
         TalkUser savedTalk = talkService.submitTalk(user.getId(), talkUser);
@@ -119,6 +117,7 @@ public class SessionController extends RestrictedController {
      */
     @RequestMapping(value="/drafts", method=RequestMethod.POST)
     @Secured(Role.AUTHENTICATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public TalkUser addDraft(HttpServletRequest req, @Valid @RequestBody TalkUser talkUser) throws NotVerifiedException, CospeakerNotFoundException {
         User user = retrieveUser(req);
         return talkService.addDraft(user.getId(), talkUser);
