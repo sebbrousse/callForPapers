@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <front-tools.install-directory>${project.build.directory}/front-tools</front-tools.install-directory>
-        <assertj-core.version>3.2.0</assertj-core.version>
+        <assertj-core.version>3.12.2</assertj-core.version>
     </properties>
 
     <prerequisites>
